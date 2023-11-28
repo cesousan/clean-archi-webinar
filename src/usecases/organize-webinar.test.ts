@@ -8,7 +8,11 @@ import { IDateGenerator, IIDGenerator } from '../ports';
 import { OrganizeWebinar } from './organize-webinar';
 
 describe('Feature: Organize webinar', () => {
-  const userJohnDoe: User = new User({ id: 'johnDoe-id' });
+  const userJohnDoe: User = new User({
+    id: 'johnDoe-id',
+    email: 'johndoe@gmail.com',
+    password: 'azert',
+  });
   let repository: InMemoryWebinarRepository;
   let idGenerator: IIDGenerator;
   let usecase: OrganizeWebinar;

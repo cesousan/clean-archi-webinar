@@ -24,7 +24,11 @@ export class AppController {
     body: WebinarAPI.OrganizeWebinar.Request,
   ): Promise<WebinarAPI.OrganizeWebinar.Response> {
     return this.organizeWebinar.execute({
-      user: new User({ id: 'john-doe' }),
+      user: new User({
+        id: 'john-doe',
+        email: 'johndoe@gmail.com',
+        password: 'azerty',
+      }),
       title: body.title,
       seats: body.seats,
       startDate: body.startDate,
