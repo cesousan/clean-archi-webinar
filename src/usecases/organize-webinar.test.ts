@@ -11,7 +11,7 @@ describe('Feature: Organize webinar', () => {
   const userJohnDoe: User = new User({
     id: 'johnDoe-id',
     email: 'johndoe@gmail.com',
-    password: 'azert',
+    password: 'azerty',
   });
   let repository: InMemoryWebinarRepository;
   let idGenerator: IIDGenerator;
