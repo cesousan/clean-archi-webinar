@@ -1,6 +1,9 @@
+import { InjectionToken } from '@nestjs/common';
 import { User } from '../entities';
 import { IUserRepository } from '../ports';
 
+export const I_AUTHENTICATOR: InjectionToken<IAuthenticator> =
+  Symbol('I_AUTHENTICATOR');
 export interface IAuthenticator {
   authenticate(token: string): Promise<User>;
 }
