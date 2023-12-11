@@ -1,49 +1,33 @@
-import { Test } from '@nestjs/testing';
 import { addDays, addHours } from 'date-fns';
 import * as request from 'supertest';
 
 import { InMemoryUserRepository, InMemoryWebinarRepository } from '../adapters';
-import { AppModule } from '../app/app.module';
-import { User } from '../entities';
-import { INestApplication } from '@nestjs/common';
-import { after } from 'node:test';
+import { TestApp } from './test-app';
+import { e2eUsers } from './user-seeds';
 
 describe('Feature: Organize webinar', () => {
-  let app: INestApplication;
-  const johnDoe = new User({
-    id: 'john-doe',
-    email: 'johndoe@gmail.com',
-    password: 'azerty',
-  });
+  let app: TestApp;
 
-  const token = Buffer.from(
-    `${johnDoe.props.email}:${johnDoe.props.password}`,
-  ).toString('base64');
+  const authToken = e2eUsers.johnDoe.authToken;
 
   const startDate = addDays(new Date(), 4);
   const endDate = addHours(startDate, 1);
 
   beforeEach(async () => {
-    const module = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
-    app = module.createNestApplication();
-    await app.init();
+    app = new TestApp();
+    await app.setup();
+    await app.loadFixtures([e2eUsers.johnDoe]);
   });
 
   afterEach(async () => {
-    await app.close();
+    await app.teardown();
   });
 
   describe('Scenario: User is authenticated', () => {
-    beforeEach(async () => {
-      const userRepository = app.get(InMemoryUserRepository);
-      await userRepository.create(johnDoe);
-    });
     it('should organize the webinar', async () => {
       const result = await request(app.getHttpServer())
         .post('/webinars')
-        .set('Authorization', `Basic ${token}`)
+        .set('Authorization', authToken)
         .send({
           title: 'My first webinar',
           seats: 100,
@@ -54,7 +38,9 @@ describe('Feature: Organize webinar', () => {
       expect(result.status).toEqual(201);
       expect(result.body).toEqual({ id: expect.any(String) });
 
-      const webinarRepository = app.get(InMemoryWebinarRepository);
+      const webinarRepository = app.get<InMemoryWebinarRepository>(
+        InMemoryWebinarRepository,
+      );
       const webinar = webinarRepository.database.get(result.body.id);
       expect(webinar).toBeDefined();
       expect(webinar!.props).toEqual({
