@@ -4,8 +4,8 @@ import {
   CurrentDateGenerator,
   InMemoryWebinarRepository,
   RandomIDGenerator,
-} from '../../adapters';
-import { OrganizeWebinar } from '../../usecases/organize-webinar';
+} from '@webinar/adapters';
+import { OrganizeWebinar } from '@webinar/usecases/organize-webinar';
 
 export const organizeWebinarDependencies = [
   InMemoryWebinarRepository,

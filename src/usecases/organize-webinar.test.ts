@@ -1,10 +1,10 @@
-import { User, Webinar } from 'src/entities';
 import {
   DeterministicDateGenerator,
   DeterministicIDGenerator,
   InMemoryWebinarRepository,
-} from '../adapters/index.testing';
-import { IDateGenerator, IIDGenerator } from '../ports';
+} from '@webinar/adapters/index.testing';
+import { User, Webinar } from '@webinar/entities';
+import { IDateGenerator, IIDGenerator } from '@webinar/ports';
 import { OrganizeWebinar } from './organize-webinar';
 
 describe('Feature: Organize webinar', () => {

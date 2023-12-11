@@ -1,8 +1,8 @@
 import { Body, Controller, Post, Request } from '@nestjs/common';
 
-import { User } from '../entities';
-import { ZodValidationPipe } from '../pipes/zod-validation.pipe';
-import { OrganizeWebinar } from '../usecases/organize-webinar';
+import { User } from '@webinar/entities';
+import { ZodValidationPipe } from '@webinar/pipes/zod-validation.pipe';
+import { OrganizeWebinar } from '@webinar/usecases/organize-webinar';
 
 import { WebinarAPI } from './contract';
 

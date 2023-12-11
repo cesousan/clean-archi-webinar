@@ -1,6 +1,6 @@
-import { InMemoryUserRepository } from '../adapters';
-import { User } from '../entities';
-import { IUserRepository } from '../ports';
+import { InMemoryUserRepository } from '@webinar/adapters';
+import { User } from '@webinar/entities';
+import { IUserRepository } from '@webinar/ports';
 import { IFixture } from './fixture';
 import { TestApp } from './test-app';
 

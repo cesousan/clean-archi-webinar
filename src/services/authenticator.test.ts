@@ -1,6 +1,6 @@
-import { InMemoryUserRepository } from '../adapters/index.testing';
-import { User } from '../entities';
-import { IUserRepository } from '../ports';
+import { InMemoryUserRepository } from '@webinar/adapters/index.testing';
+import { User } from '@webinar/entities';
+import { IUserRepository } from '@webinar/ports';
 
 import { Authenticator } from './authenticator';
 

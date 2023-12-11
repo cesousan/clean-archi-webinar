@@ -1,4 +1,4 @@
-import { User } from '../entities';
+import { User } from '@webinar/entities';
 import { UserFixture } from './user-fixture';
 
 const johnDoe = new UserFixture(

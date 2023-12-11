@@ -1,7 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 
-import { AppModule } from '../app/app.module';
+import { AppModule } from '@webinar/app/app.module';
 import { IFixture } from './fixture';
 
 export class TestApp {

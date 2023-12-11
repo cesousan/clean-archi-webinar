@@ -1,8 +1,9 @@
 import { Provider } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 
-import { InMemoryUserRepository } from '../../adapters';
-import { Authenticator } from '../../services/authenticator';
+import { InMemoryUserRepository } from '@webinar/adapters';
+import { Authenticator } from '@webinar/services/authenticator';
+
 import { AuthGuard } from '../guards';
 
 export const authDependencies = [InMemoryUserRepository];

@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext } from '@nestjs/common';
-import { IAuthenticator } from 'src/services/authenticator';
+
+import { IAuthenticator } from '@webinar/services/authenticator';
 import { extractToken } from '../extract-token';
-import { ca } from 'date-fns/locale';
 
 export class AuthGuard implements CanActivate {
   constructor(private readonly auth: IAuthenticator) {}

@@ -1,5 +1,9 @@
-import { User, Webinar } from '../entities';
-import { IDateGenerator, IIDGenerator, IWebinarRepository } from '../ports';
+import { User, Webinar } from '@webinar/entities';
+import {
+  IDateGenerator,
+  IIDGenerator,
+  IWebinarRepository,
+} from '@webinar/ports';
 
 export class OrganizeWebinar {
   constructor(

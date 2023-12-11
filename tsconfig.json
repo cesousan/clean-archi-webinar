@@ -9,7 +9,10 @@
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "src",
+    "paths": {
+      "@webinar/*": ["*"],
+    },
     "incremental": true,
     "skipLibCheck": true,
     "noImplicitAny": false,

@@ -1,5 +1,5 @@
-import { IUserRepository } from 'src/ports';
-import { User } from '../entities';
+import { User } from '@webinar/entities';
+import { IUserRepository } from '@webinar/ports';
 
 export interface IAuthenticator {
   authenticate(token: string): Promise<User>;

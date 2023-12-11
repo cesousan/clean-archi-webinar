@@ -1,5 +1,5 @@
-import { Webinar } from '../entities';
-import { IWebinarRepository } from '../ports';
+import { Webinar } from '@webinar/entities';
+import { IWebinarRepository } from '@webinar/ports';
 
 export class InMemoryWebinarRepository implements IWebinarRepository {
   public database: Map<string, Webinar> = new Map<string, Webinar>();

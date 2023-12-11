@@ -1,7 +1,7 @@
 import { addDays, addHours } from 'date-fns';
 import * as request from 'supertest';
 
-import { InMemoryUserRepository, InMemoryWebinarRepository } from '../adapters';
+import { InMemoryWebinarRepository } from '@webinar/adapters';
 import { TestApp } from './test-app';
 import { e2eUsers } from './user-seeds';
 

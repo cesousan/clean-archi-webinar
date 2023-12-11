@@ -1,5 +1,5 @@
-import { User } from 'src/entities';
-import { IUserRepository } from '../ports';
+import { User } from '@webinar/entities';
+import { IUserRepository } from '@webinar/ports';
 
 type EmailAddress = string;
 
