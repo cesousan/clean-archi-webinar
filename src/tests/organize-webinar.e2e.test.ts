@@ -1,9 +1,13 @@
 import { addDays, addHours } from 'date-fns';
 import * as request from 'supertest';
 
-import { IWebinarRepository, I_WEBINAR_REPOSITORY } from '@webinar/ports';
-import { TestApp } from './test-app';
-import { e2eUsers } from './user-seeds';
+import {
+  IWebinarRepository,
+  I_WEBINAR_REPOSITORY,
+} from '@webinar/webinars/ports';
+
+import { TestApp } from './utils/test-app';
+import { e2eUsers } from './seeds/user-seeds';
 
 describe('Feature: Organize webinar', () => {
   let app: TestApp;
