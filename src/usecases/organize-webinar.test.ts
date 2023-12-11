@@ -4,7 +4,11 @@ import {
   InMemoryWebinarRepository,
 } from '@webinar/adapters/index.testing';
 import { User, Webinar } from '@webinar/entities';
-import { IDateGenerator, IIDGenerator } from '@webinar/ports';
+import {
+  IDateGenerator,
+  IIDGenerator,
+  IWebinarRepository,
+} from '@webinar/ports';
 import { OrganizeWebinar } from './organize-webinar';
 
 describe('Feature: Organize webinar', () => {
@@ -13,7 +17,7 @@ describe('Feature: Organize webinar', () => {
     email: 'johndoe@gmail.com',
     password: 'azerty',
   });
-  let repository: InMemoryWebinarRepository;
+  let repository: IWebinarRepository;
   let idGenerator: IIDGenerator;
   let usecase: OrganizeWebinar;
   let dateGenerator: IDateGenerator;
@@ -42,9 +46,8 @@ describe('Feature: Organize webinar', () => {
     it('should insert the webinar into the db', async () => {
       await usecase.execute(payload);
 
-      expect(repository.database.size).toEqual(1);
-      const createdWebinar = repository.database.get('id-1')!;
-      expectWebinarToEqual(createdWebinar);
+      const createdWebinar = await repository.findById('id-1')!;
+      expectWebinarToEqual(createdWebinar!);
     });
   });
   describe('Scenario: The webinar happens too soon', () => {
@@ -70,7 +73,7 @@ describe('Feature: Organize webinar', () => {
         await usecase.execute(payload);
       } catch (e) {}
 
-      expect(repository.database.size).toEqual(0);
+      expect(await repository.findById('id-1')).toEqual(null);
     });
   });
   describe('Scenario: The webinar has too many seats', () => {
@@ -91,7 +94,7 @@ describe('Feature: Organize webinar', () => {
         await usecase.execute(payload);
       } catch (e) {}
 
-      expect(repository.database.size).toEqual(0);
+      expect(await repository.findById('id-1')).toEqual(null);
     });
   });
   describe('Scenario: The webinar has no seats', () => {
@@ -112,7 +115,7 @@ describe('Feature: Organize webinar', () => {
         await usecase.execute(payload);
       } catch (e) {}
 
-      expect(repository.database.size).toEqual(0);
+      expect(await repository.findById('id-1')).toEqual(null);
     });
   });
 });
