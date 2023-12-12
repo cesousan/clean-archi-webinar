@@ -7,7 +7,7 @@ export class UserFixture implements IFixture {
   constructor(public entity: User) {}
   async load(app: TestApp): Promise<void> {
     const userRepository = app.get<IUserRepository>(I_USER_REPOSITORY);
-    const user = await userRepository.create(this.entity);
+    await userRepository.create(this.entity);
   }
 
   get authToken() {

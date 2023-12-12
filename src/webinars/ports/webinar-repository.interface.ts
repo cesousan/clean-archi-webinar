@@ -8,4 +8,5 @@ export const I_WEBINAR_REPOSITORY: InjectionToken<IWebinarRepository> = Symbol(
 export interface IWebinarRepository {
   findById(id: string): Promise<Webinar | null>;
   create(webinar: Webinar): Promise<void>;
+  update(webinar: Webinar): Promise<void>;
 }

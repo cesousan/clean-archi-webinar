@@ -3,8 +3,7 @@ import {
   DeterministicIDGenerator,
 } from '@webinar/core/adapters/index.testing';
 import { IDateGenerator, IIDGenerator } from '@webinar/core/ports';
-
-import { User } from '@webinar/users/entities';
+import { testUsers } from '@webinar/users/tests/user-seed';
 
 import { InMemoryWebinarRepository } from '../adapters/webinar-repository.in-memory';
 import { Webinar } from '../entities';
@@ -12,11 +11,7 @@ import { IWebinarRepository } from '../ports';
 import { OrganizeWebinar } from './organize-webinar';
 
 describe('Feature: Organize webinar', () => {
-  const userJohnDoe: User = new User({
-    id: 'johnDoe-id',
-    email: 'johndoe@gmail.com',
-    password: 'azerty',
-  });
+  const { alice } = testUsers;
   let repository: IWebinarRepository;
   let idGenerator: IIDGenerator;
   let usecase: OrganizeWebinar;
@@ -31,7 +26,7 @@ describe('Feature: Organize webinar', () => {
 
   describe('Scenario: Happy path', () => {
     const payload = {
-      user: userJohnDoe,
+      user: alice,
       title: 'My first webinar',
       seats: 1000,
       startDate: new Date('2023-01-10T10:00:00Z'),
@@ -52,7 +47,7 @@ describe('Feature: Organize webinar', () => {
   });
   describe('Scenario: The webinar happens too soon', () => {
     const payload = {
-      user: userJohnDoe,
+      user: alice,
       title: 'My first webinar',
       seats: 1000,
       startDate: new Date('2023-01-10T10:00:00Z'),
@@ -78,7 +73,7 @@ describe('Feature: Organize webinar', () => {
   });
   describe('Scenario: The webinar has too many seats', () => {
     const payload = {
-      user: userJohnDoe,
+      user: alice,
       title: 'My first webinar',
       seats: 1001,
       startDate: new Date('2023-01-10T10:00:00Z'),
@@ -99,7 +94,7 @@ describe('Feature: Organize webinar', () => {
   });
   describe('Scenario: The webinar has no seats', () => {
     const payload = {
-      user: userJohnDoe,
+      user: alice,
       title: 'My first webinar',
       seats: 0,
       startDate: new Date('2023-01-10T10:00:00Z'),
@@ -122,7 +117,7 @@ describe('Feature: Organize webinar', () => {
 
 function expectWebinarToEqual(webinar: Webinar) {
   expect(webinar.props).toEqual({
-    organizerId: 'johnDoe-id',
+    organizerId: 'alice-id',
     id: 'id-1',
     title: 'My first webinar',
     seats: 1000,

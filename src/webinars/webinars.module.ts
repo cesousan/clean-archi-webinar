@@ -12,6 +12,7 @@ import { InMemoryWebinarRepository } from './adapters/webinar-repository.in-memo
 import { WebinarsController } from './controllers/webinars.controller';
 import { IWebinarRepository, I_WEBINAR_REPOSITORY } from './ports';
 import { OrganizeWebinar } from './usecases/organize-webinar';
+import { ChangeSeats } from './usecases/change-seats';
 
 @Module({
   imports: [CommonModule],
@@ -29,6 +30,12 @@ import { OrganizeWebinar } from './usecases/organize-webinar';
         idGenerator: IIDGenerator,
         dateGenerator: IDateGenerator,
       ) => new OrganizeWebinar(repository, idGenerator, dateGenerator),
+    },
+    {
+      provide: ChangeSeats,
+      inject: [I_WEBINAR_REPOSITORY],
+      useFactory: (repository: IWebinarRepository) =>
+        new ChangeSeats(repository),
     },
   ],
   exports: [I_WEBINAR_REPOSITORY],

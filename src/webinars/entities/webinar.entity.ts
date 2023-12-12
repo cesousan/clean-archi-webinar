@@ -1,3 +1,4 @@
+import { Entity } from '@webinar/shared/entity';
 import { differenceInDays } from 'date-fns';
 
 export interface WebinarProps {
@@ -9,10 +10,10 @@ export interface WebinarProps {
   seats: number;
 }
 
-export class Webinar {
+export class Webinar extends Entity<WebinarProps> {
   private static readonly ALLOWED_DAYS_IN_ADVANCE = 3;
+  private static readonly MINIMUM_ALLOWED_SEATS = 1;
   private static readonly MAXIMUM_ALLOWED_SEATS = 1000;
-  constructor(public props: WebinarProps) {}
 
   isTooClose(now: Date) {
     const diff = differenceInDays(this.props.startDate, now);
@@ -22,6 +23,6 @@ export class Webinar {
     return this.props.seats > Webinar.MAXIMUM_ALLOWED_SEATS;
   }
   hasNoSeats() {
-    return this.props.seats < 1;
+    return this.props.seats < Webinar.MINIMUM_ALLOWED_SEATS;
   }
 }
