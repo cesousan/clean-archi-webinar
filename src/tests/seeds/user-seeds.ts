@@ -8,7 +8,15 @@ const johnDoe = new UserFixture(
     password: 'azerty',
   }),
 );
+const janeDoe = new UserFixture(
+  new User({
+    id: 'jane-doe',
+    email: 'janedoe@gmail.com',
+    password: 'zoubida',
+  }),
+);
 
 export const e2eUsers = {
   johnDoe,
+  janeDoe,
 };

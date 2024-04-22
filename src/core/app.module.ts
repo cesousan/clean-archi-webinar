@@ -1,26 +1,45 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
+import { MongooseModule } from '@nestjs/mongoose';
 
-import {
-  IAuthenticator,
-  I_AUTHENTICATOR,
-} from '@webinar/users/services/authenticator';
+import { I_USER_REPOSITORY } from '@webinar/users/ports';
+import { Authenticator } from '@webinar/users/services/authenticator';
 import { UsersModule } from '@webinar/users/users.module';
 import { WebinarsModule } from '@webinar/webinars/webinars.module';
 
-import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { CommonModule } from './common.module';
 import { AuthGuard } from './guards';
 
 @Module({
-  imports: [CommonModule, WebinarsModule, UsersModule],
+  imports: [
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.get<string>('DATABASE_URL'),
+      }),
+    }),
+    CommonModule,
+    WebinarsModule,
+    UsersModule,
+  ],
   controllers: [AppController],
   providers: [
     {
+      provide: Authenticator,
+      inject: [I_USER_REPOSITORY],
+      useFactory: (repository) => {
+        return new Authenticator(repository);
+      },
+    },
+    {
       provide: APP_GUARD,
-      inject: [I_AUTHENTICATOR],
-      useFactory: (authenticator: IAuthenticator) =>
-        new AuthGuard(authenticator),
+      inject: [Authenticator],
+      useFactory: (authenticator) => {
+        return new AuthGuard(authenticator);
+      },
     },
   ],
 })

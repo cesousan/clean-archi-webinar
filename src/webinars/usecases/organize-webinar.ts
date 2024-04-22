@@ -5,6 +5,11 @@ import { Executable } from '@webinar/shared/executable';
 
 import { Webinar } from '../entities';
 import { IWebinarRepository } from '../ports';
+import {
+  WebinarNotEnoughSeatsException,
+  WebinarTooEarlyException,
+  WebinarTooManySeatsException,
+} from '../exceptions';
 
 type Request = {
   user: User;
@@ -33,17 +38,15 @@ export class OrganizeWebinar implements Executable<Request, Response> {
     });
 
     if (webinar.isTooClose(this.dateGenerator.now())) {
-      throw new Error(
-        'The webinar must be organized at least 3 days in advance',
-      );
+      throw new WebinarTooEarlyException();
     }
 
     if (webinar.hasTooManySeats()) {
-      throw new Error('The webinar must have no more than 1000 seats');
+      throw new WebinarTooManySeatsException();
     }
 
     if (webinar.hasNoSeats()) {
-      throw new Error('The webinar must have at least 1 seat');
+      throw new WebinarNotEnoughSeatsException();
     }
 
     await this.repository.create(webinar);

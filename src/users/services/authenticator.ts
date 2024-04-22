@@ -1,6 +1,7 @@
 import { InjectionToken } from '@nestjs/common';
 import { User } from '../entities';
 import { IUserRepository } from '../ports';
+import { DomainException } from '@webinar/shared/exception';
 
 export const I_AUTHENTICATOR: InjectionToken<IAuthenticator> =
   Symbol('I_AUTHENTICATOR');
@@ -14,7 +15,7 @@ export class Authenticator implements IAuthenticator {
     const [email, password] = decoded.split(':');
 
     const user = await this.userRepository.findByEmailAddress(email);
-    if (user === null) throw new Error('User not found');
+    if (user === null) throw new DomainException('User not found');
 
     return user;
   }

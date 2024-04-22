@@ -1,5 +1,5 @@
-import { Webinar } from '../entities';
-import { IWebinarRepository } from '../ports';
+import { Webinar } from '../../entities';
+import { IWebinarRepository } from '../../ports';
 
 export class InMemoryWebinarRepository implements IWebinarRepository {
   private database: Map<string, Webinar> = new Map<string, Webinar>();
@@ -11,11 +11,14 @@ export class InMemoryWebinarRepository implements IWebinarRepository {
   }
   async findById(id: string): Promise<Webinar | null> {
     return this.database.has(id)
-      ? new Webinar(this.database.get(id)!.initialProps)
+      ? new Webinar(this.database.get(id)!.initialState)
       : null;
   }
   async update(webinar: Webinar) {
     webinar.commit();
     this.database.set(webinar.props.id, webinar);
+  }
+  async delete(webinar: Webinar) {
+    this.database.delete(webinar.props.id);
   }
 }

@@ -1,4 +1,4 @@
-export abstract class Entity<T extends { id: string }> {
+export abstract class Entity<T> {
   protected _initialProps: T;
   protected _currentProps: T;
 
@@ -17,7 +17,7 @@ export abstract class Entity<T extends { id: string }> {
     this._currentProps = props;
   }
 
-  get initialProps(): T {
+  get initialState(): T {
     return this._initialProps;
   }
 
@@ -29,13 +29,17 @@ export abstract class Entity<T extends { id: string }> {
     this._initialProps = { ...this.props };
   }
 
-  public equals(entity?: Entity<T>): boolean {
+  clone(): Entity<T> {
+    return new (this.constructor as any)(this.props);
+  }
+
+  public equals(entity: Entity<T>, idKey: keyof T): boolean {
     if (entity === null || entity === undefined) {
       return false;
     }
     if (this === entity) {
       return true;
     }
-    return this.props.id === entity.props.id;
+    return this.props[idKey] === entity.props[idKey];
   }
 }

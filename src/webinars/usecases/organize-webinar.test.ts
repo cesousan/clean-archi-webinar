@@ -5,7 +5,7 @@ import {
 import { IDateGenerator, IIDGenerator } from '@webinar/core/ports';
 import { testUsers } from '@webinar/users/tests/user-seed';
 
-import { InMemoryWebinarRepository } from '../adapters/webinar-repository.in-memory';
+import { InMemoryWebinarRepository } from '../adapters/in-memory/webinar-repository.in-memory';
 import { Webinar } from '../entities';
 import { IWebinarRepository } from '../ports';
 import { OrganizeWebinar } from './organize-webinar';

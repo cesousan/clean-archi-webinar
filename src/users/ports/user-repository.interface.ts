@@ -7,4 +7,5 @@ export const I_USER_REPOSITORY: InjectionToken<IUserRepository> =
 export interface IUserRepository {
   create(user: User): Promise<{ id: string }>;
   findByEmailAddress(emailAddress: string): Promise<User | null>;
+  findById(id: string): Promise<User | null>;
 }
